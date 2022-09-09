@@ -8,9 +8,8 @@ def binding_server(ip_address, port, messages, default=b'fail'):
 
         conn, addr = server.accept()
         msg = conn.recv(1000)
-        print(msg, messages)
-        if msg.decode() in messages.keys():
-            conn.send(messages[msg.decode()].encode())
+        if msg in messages.keys():
+            conn.send(messages[msg])
         else:
             conn.send(default)
 
