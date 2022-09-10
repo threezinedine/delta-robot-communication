@@ -1,13 +1,15 @@
 from behave import given, when, then
 from src.controllers import Controller
+from src.models import Command
 
 
 
 @when("the app sends the stop command (address {function})")
 def when_the_stop_function_is_sent(context, function):
-    context.controller = Controller()
+    context.command = Command()
+    context.controller = Controller(command=context.command)
     context.controller.set_function(int(function))
-    context.response = contex.tcontroller.send(controller.command.to_bytearray())
+    context.response = context.controller.send(context.controller.command.to_bytearray())
 
 @then("the app should receive the response")
 def then_the_app_receive_the_response_of_the_stop_command(context):
