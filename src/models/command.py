@@ -11,7 +11,7 @@ class Command(ICommand):
         self._params = [DefaultParam() for _ in range(num_params)]
 
     def set_function(self, function:int) -> None:
-        pass 
+        self._address_property.set_value(function) 
 
     def _get_params_to_hex(self):
         return b''.join([param.to_hex() for param in self._params])

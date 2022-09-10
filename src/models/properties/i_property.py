@@ -12,5 +12,5 @@ class IProperty(ABC):
     def to_hex(self) -> bytearray:
         pass
 
-class SetValuableProperty(ISetValuable, IProperty):
+class ISetValuableProperty(ISetValuable, IProperty):
     pass
