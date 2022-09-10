@@ -1,7 +1,7 @@
 import unittest
 from src.models import Command
 from unittest.mock import Mock
-from src.models.properties import IProperty, ISetValuable, ISetValuableProperty
+from src.models.properties import IProperty, ISetValuable, ISetValuableProperty, DefaultParam
 
 
 class CommandTest(unittest.TestCase):
@@ -37,17 +37,24 @@ class CommandTest(unittest.TestCase):
         address_property.set_value.assert_called_once_with(function_address)
 
 
-    def test_command_with_command_address_4_to_hex_function_and_change_the_param_5th(self):
+    def test_command_with_command_address_4_to_hex_function_and_change_the_param_4th(self):
         function_address = 4
-        param_index = 5
+        param_index = 4
         param_value = 3
-        expected_func = b'\x30\x30\x00\x00\x00\x22\x01\x06\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+        expected_func = b'\x30\x30\x00\x00\x00\x22\x01\x06\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00'
         address_property = Mock(spec=ISetValuableProperty)
         address_property.to_hex.return_value = b'\x00\x04'
-        command = Command(address_property=address_property)
+        param_property = Mock(spec=ISetValuableProperty)
+        param_property.to_hex.return_value = b'\x00\x00\x00\x03'
+
+        params = [DefaultParam()] * 6
+        params[param_index] = param_property
+
+        command = Command(address_property=address_property, params=params)
         command.set_function(function_address)
         command.set_param_value(param_index, param_value)
 
         result = command.to_hex()
 
         assert result == expected_func
+        param_property.set_value.assert_called_once_with(param_value)
