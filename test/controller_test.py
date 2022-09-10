@@ -6,8 +6,9 @@ from src.models import ICommand
 
 class ControllerTest(unittest.TestCase):
     def test_the_command_function_is_set_when_the_controller_set_the_function(self):
+        command_address = 6
         command = Mock(spec=ICommand)
         controller = Controller(command=command)
-        controller.set_function(6)
+        controller.set_function(command_address)
 
-        command.set_function.assert_called_once_with(6)
+        command.set_function.assert_called_once_with(command_address)
