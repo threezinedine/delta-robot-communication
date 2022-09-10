@@ -2,11 +2,11 @@ import unittest
 from src.models import Command
 from unittest.mock import Mock
 from src.models.properties import IProperty, ISetValuable, ISetValuableProperty, DefaultParam
+from src.utils.exceptions import ChangeNonChangaleProperty
 
 
 class CommandTest(unittest.TestCase):
     def test_command_with_command_address_6_to_hex_function(self):
-        function_address = 6
         expected_func = b'\x30\x30\x00\x00\x00\x22\x01\x06\x00\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
         command = Command()
 
@@ -58,3 +58,10 @@ class CommandTest(unittest.TestCase):
 
         assert result == expected_func
         param_property.set_value.assert_called_once_with(param_value)
+
+
+    def test_command_set_value_to_the_none_setable_param_with_address_6_raises_an_error(self):
+        changed_param_index = 3
+        new_value = 4
+        command = Command()
+        self.assertRaises(ChangeNonChangaleProperty, command.set_param_value(changed_param_index, new_value))
