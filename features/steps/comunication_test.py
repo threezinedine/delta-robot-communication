@@ -8,8 +8,9 @@ from src.models import Command
 def when_the_stop_function_is_sent(context, function):
     context.command = Command()
     context.controller = Controller(command=context.command)
-    context.controller.set_function(int(function))
-    context.response = context.controller.send(context.controller.command.to_bytearray())
+    context.controller.connect(context.ip_address, context.port)
+    print(context.command.to_hex())
+    context.response = context.controller.send(context.controller.command.to_hex())
 
 @then("the app should receive the response")
 def then_the_app_receive_the_response_of_the_stop_command(context):
