@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod  
+from abc import ABC, abstractmethod, abstractproperty
 
 
 class ISetValuable(ABC):
@@ -8,6 +8,10 @@ class ISetValuable(ABC):
 
 
 class IProperty(ABC):
+    @abstractproperty
+    def changable(self):
+        pass
+
     @abstractmethod
     def to_hex(self) -> bytearray:
         pass

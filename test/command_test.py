@@ -64,4 +64,5 @@ class CommandTest(unittest.TestCase):
         changed_param_index = 3
         new_value = 4
         command = Command()
-        self.assertRaises(ChangeNonChangaleProperty, command.set_param_value(changed_param_index, new_value))
+        with self.assertRaises(ChangeNonChangaleProperty) as error:
+            command.set_param_value(changed_param_index, new_value)

@@ -1,5 +1,6 @@
 from .i_command import ICommand
 from ..models.properties import IProperty, FrameHeaderProperty, DefaultParam
+from ..utils.exceptions import ChangeNonChangaleProperty
 
 
 class Command(ICommand):
@@ -26,4 +27,7 @@ class Command(ICommand):
         return self._header_frame.to_hex() + address + self._get_params_to_hex()
 
     def set_param_value(self, param_index:int, param_value:object) -> None:
-        self._params[param_index].set_value(param_value)
+        if self._params[param_index].changable:
+            self._params[param_index].set_value(param_value)
+        else:
+            raise ChangeNonChangaleProperty("You cannot change the value of an non-changable property")
