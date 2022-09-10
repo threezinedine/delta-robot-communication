@@ -66,3 +66,22 @@ class CommandTest(unittest.TestCase):
         command = Command()
         with self.assertRaises(ChangeNonChangaleProperty) as error:
             command.set_param_value(changed_param_index, new_value)
+
+
+    def test_command_set_value_to_the_none_setable_param_with_address_5_raises_an_error(self):
+        function_address = 5
+        changed_param_index = 3
+        new_value = 4
+
+        address_property = Mock(spec=ISetValuableProperty)
+        address_property.to_hex.return_value = b'\x00\x05'
+        
+        params = [DefaultParam() for _ in range(6)]
+        params[4] = Mock(spec=ISetValuableProperty)
+        params[4].to_hex.return_value = b'\x00\x00\x00\x05'
+
+        command = Command(address_property=address_property, params=params)
+        command.set_function(function_address)
+
+        with self.assertRaises(ChangeNonChangaleProperty) as error:
+            command.set_param_value(changed_param_index, new_value)
