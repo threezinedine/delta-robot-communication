@@ -5,14 +5,13 @@ from src.utils import binding_server
 from src.controllers import Controller
 
 
-@given("the server is binded as {ip_address}:{port}, the server should response \"{response}\" when the app sends \"{request}\"")
-def given_the_server(context, ip_address, port, response, request):
+@given("the server is binded as {ip_address}:{port}")
+def given_the_server(context, ip_address, port):
     context.ip_address = ip_address
     context.port = int(port)
-    context.connected = False
     server_thread = Thread(target=binding_server,
             args=(context.ip_address, 
-                context.port, {request.encode(): response.encode()}))
+                context.port))
     server_thread.start()
 
 @when("the app is connected to the server")
