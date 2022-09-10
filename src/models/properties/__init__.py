@@ -1,3 +1,3 @@
-from .i_property import IProperty
-from .frame_header_property import FrameHeaderProperty
-from .default_param import DefaultParam
+from .i_property import *
+from .frame_header_property import *
+from .default_param import *

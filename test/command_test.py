@@ -1,7 +1,7 @@
 import unittest
 from src.models import Command
 from unittest.mock import Mock
-from src.models.properties import IProperty
+from src.models.properties import IProperty, ISetValuable
 
 
 class CommandTest(unittest.TestCase):
@@ -29,3 +29,10 @@ class CommandTest(unittest.TestCase):
         assert result == expected_func
 
 
+    def test_set_function_changes_the_value_of_the_property(self):
+        function_address = 6
+        address_property = Mock(spec=ISetValuable)
+        command = Command(address_property=address_property)
+        command.set_function(function_address)
+
+        address_property.set_value.assert_called_once_with(function_address)
