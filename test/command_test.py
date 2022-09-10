@@ -5,7 +5,7 @@ from src.models.properties import IProperty
 
 
 class CommandTest(unittest.TestCase):
-    def test_command_with_command_address_to_hex_function(self):
+    def test_command_with_command_address_6_to_hex_function(self):
         function_address = 6
         expected_func = b'\x30\x30\x00\x00\x00\x22\x01\x06\x00\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
         command = Command()
