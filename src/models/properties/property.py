@@ -4,9 +4,9 @@ from .i_property import ISetValuableProperty
 class Property(ISetValuableProperty):
     BYTEORDER = 'big'
 
-    def __init__(self):
+    def __init__(self, num_bytes=2):
         self._value = 0
-        self._num_bytes = 2
+        self._num_bytes = num_bytes
     
     def to_hex(self) -> bytearray:
         return self._value.to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
