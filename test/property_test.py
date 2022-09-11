@@ -1,5 +1,7 @@
 import unittest 
 from src.models.properties import Property
+from unittest.mock import Mock
+from src.views import IObserver
 
 
 class PropertyTest(unittest.TestCase):
@@ -37,3 +39,13 @@ class PropertyTest(unittest.TestCase):
         result = test_param.to_hex()
 
         assert result == expected_result
+
+    def test_call_one_observer_each_time_the_value_is_changed(self):
+        new_value = 4
+        observer = Mock(spec=IObserver)
+        test_property = Property()
+        test_property.add_observer(observer)
+
+        test_property.set_value(new_value)
+
+        observer.update.assert_called_once_with(test_property)

@@ -1,4 +1,5 @@
 from .i_property import ISetValuableProperty
+from ...views import IObserver
 
 
 class Property(ISetValuableProperty):
@@ -7,6 +8,7 @@ class Property(ISetValuableProperty):
     def __init__(self, num_bytes=2):
         self._value = 0
         self._num_bytes = num_bytes
+        self._observers = []
     
     def to_hex(self) -> bytearray:
         return self._value.to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
@@ -14,6 +16,12 @@ class Property(ISetValuableProperty):
     def set_value(self, new_value:object) -> None:
         self._value = new_value
 
+        for observer in self._observers:
+            observer.update(self)
+
     @property
     def changable(self):
         return True
+
+    def add_observer(self, observer:IObserver):
+        self._observers.append(observer)
