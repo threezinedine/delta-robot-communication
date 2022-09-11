@@ -23,5 +23,8 @@ class Property(ISetValuableProperty):
     def changable(self):
         return True
 
-    def add_observer(self, observer:IObserver):
+    def add_observer(self, observer:IObserver) -> None:
         self._observers.append(observer)
+
+    def remove_observer(self, observer:IObserver) -> None:
+        self._observers.remove(observer)
