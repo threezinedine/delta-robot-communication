@@ -49,3 +49,19 @@ class PropertyTest(unittest.TestCase):
         test_property.set_value(new_value)
 
         observer.update.assert_called_once_with(test_property)
+
+    def test_multiple_observers(self):
+        new_value = 4
+        observer_1 = Mock(spec=IObserver)
+        observer_2 = Mock(spec=IObserver)
+        observer_3 = Mock(spec=IObserver)
+        test_property = Property()
+        test_property.add_observer(observer_1)
+        test_property.add_observer(observer_2)
+        test_property.add_observer(observer_3)
+
+        test_property.set_value(new_value)
+
+        observer_1.update.assert_called_once_with(test_property)
+        observer_2.update.assert_called_once_with(test_property)
+        observer_3.update.assert_called_once_with(test_property)
