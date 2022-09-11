@@ -1,6 +1,7 @@
 from .i_command import ICommand
-from ..models.properties import IProperty, FrameHeaderProperty, DefaultParam
+from ..models.properties import IProperty, FrameHeaderProperty, DefaultParam, ISetValuableProperty
 from ..utils.exceptions import ChangeNonChangaleProperty
+from copy import deepcopy
 
 
 class Command(ICommand):
@@ -10,7 +11,6 @@ class Command(ICommand):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
-        print(self._params[5].to_hex())
 
     def set_function(self, function:int) -> None:
         self._address_property.set_value(function) 
@@ -31,3 +31,7 @@ class Command(ICommand):
             self._params[param_index].set_value(param_value)
         else:
             raise ChangeNonChangaleProperty("You cannot change the value of an non-changable property")
+
+    def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
+        print(self._params)
+        self._params[param_index] = param
