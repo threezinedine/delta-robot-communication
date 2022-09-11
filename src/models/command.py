@@ -1,5 +1,5 @@
 from .i_command import ICommand
-from ..models.properties import IProperty, FrameHeaderProperty, DefaultParam
+from ..models.properties import IProperty, FrameHeaderProperty, DefaultParam, ISetValuableProperty
 from ..utils.exceptions import ChangeNonChangaleProperty
 
 
@@ -31,3 +31,6 @@ class Command(ICommand):
             self._params[param_index].set_value(param_value)
         else:
             raise ChangeNonChangaleProperty("You cannot change the value of an non-changable property")
+
+    def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
+        self._params[param_index] = param
