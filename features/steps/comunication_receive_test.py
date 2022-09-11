@@ -1,4 +1,5 @@
 from behave import given, when, then
+from src.models import Response
 
 
 @then("the app should receive the address \"{address}\" and value \"{value}\"")
