@@ -33,6 +33,7 @@ if __name__ == "__main__":
         controller.command = command
         print(f"""
             ----------
+            Command Name: {command.get_name()}
             Command: {command.to_hex()}
             ----------
         """)

@@ -11,6 +11,7 @@ class Command(ICommand):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
+        self._name = ''
 
     def set_function(self, function:int) -> None:
         self._address_property.set_value(int(function)) 
@@ -22,7 +23,10 @@ class Command(ICommand):
             return self._address_property.get_value()
 
     def get_name(self):
-        return ''
+        return self._name 
+
+    def set_name(self, new_name):
+        self._name = new_name
 
     def _get_params_to_hex(self):
         return b''.join([param.to_hex() for param in self._params])
