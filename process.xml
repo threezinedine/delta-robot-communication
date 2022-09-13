@@ -1,0 +1,28 @@
+<commands>
+    <command>
+        <name>run</name>
+        <address>4</address>
+        <parameters>
+            <parameter>
+                <index>4</index>
+                <value>243</value>
+            </parameter>
+        </parameters>
+    </command>
+    <command>
+        <name>reset</name>
+        <address>5</address>
+        <parameters>
+            <parameter>
+                <index>4</index>
+                <value>5</value>
+            </parameter>
+        </parameters>
+    </command>
+    <command>
+        <name>stop</name>
+        <address>6</address>
+        <parameters>
+        </parameters>
+    </command>
+</commands>

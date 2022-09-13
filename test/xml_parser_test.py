@@ -56,3 +56,5 @@ class XMLParserTest(unittest.TestCase):
         assert default_command.get_function() == 6
         assert reset_command.get_function() == 4
         assert reset_command.check_param_changable(4)
+        assert reset_command.get_param_value(4) == 4
+        assert reset_command.get_param_value(5) == 1

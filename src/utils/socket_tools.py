@@ -24,6 +24,25 @@ def binding_server(ip_address, port, messages=MESSAGES, default=b'fail'):
         else:
             conn.send(default)
 
+
+def binding_server_for(ip_address, port, messages=MESSAGES, default=b'fail'):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+        server.bind((ip_address, port))
+        server.listen()
+
+        conn, addr = server.accept()
+
+        while True:
+            msg = conn.recv(1000)
+            if msg != b'quit':
+                if msg in messages.keys():
+                    conn.send(messages[msg])
+                else:
+                    conn.send(default)
+            else:
+                break
+
+
 def create_a_socket_client():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     return client

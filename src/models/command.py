@@ -43,3 +43,6 @@ class Command(ICommand):
 
     def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
         self._params[param_index] = param
+
+    def get_param_value(self, param_index):
+        return self._params[param_index].get_value()

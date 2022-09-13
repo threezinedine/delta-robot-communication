@@ -18,9 +18,10 @@ class Response:
         obj.value = int.from_bytes(obj.value, 'big')
 
 
-response_obj = Response()
-Response.from_bytes(response_obj, b'00\x00\x00\x00\x08\x01\x03\x01\x3f\x00\x24\x00\x00')
-value = response_obj.get_value()
-function = response_obj.get_function()
+if __name__ == "__main__":
+    response_obj = Response()
+    Response.from_bytes(response_obj, b'00\x00\x00\x00\x08\x01\x03\x01\x3f\x00\x24\x00\x00')
+    value = response_obj.get_value()
+    function = response_obj.get_function()
 
-print(str(value) + '\t' + str(function))
+    print(str(value) + '\t' + str(function))
