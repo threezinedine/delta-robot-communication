@@ -38,5 +38,8 @@ class Command(ICommand):
         else:
             raise ChangeNonChangaleProperty("You cannot change the value of an non-changable property")
 
+    def check_param_changable(self, param_index:int) -> bool:
+        return self._params[param_index].changable
+
     def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
         self._params[param_index] = param

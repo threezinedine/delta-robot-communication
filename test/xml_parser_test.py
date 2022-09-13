@@ -30,9 +30,9 @@ class XMLParserTest(unittest.TestCase):
         assert parser.get_commands_list()[0].get_function() == self.stop_command.get_function()
 
 
-    def test_parse_stop_command_from_xml_file(self):
+    def test_parse_reset_command_from_xml_file_with_no_params(self):
         function = 4
-        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": {"parameter": {"index": 4, "value": 4}}}})
+        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": []}})
         parser = XMLParser(filename=self.filename)
 
         address_property = Property() 
@@ -40,3 +40,12 @@ class XMLParserTest(unittest.TestCase):
         reset_command.set_function(function)
 
         assert parser.get_commands_list()[0].get_function() == reset_command.get_function()
+
+
+    def test_parse_stop_command_from_xml_file(self):
+        function = 4
+        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}})
+        parser = XMLParser(filename=self.filename)
+
+        assert parser.get_commands_list()[0].check_param_changable(4)
+        assert parser.get_commands_list()[0].check_param_changable(5)

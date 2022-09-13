@@ -16,6 +16,16 @@ class XMLParser:
 
         if element.find("address") is not None:
             command.set_function(element.find("address").text)
+
+            params = element.find("parameters")
+
+            for param in params:
+                param_index = int(param.find("index").text)
+                param_value = int(param.find("value").text)
+
+                command.set_param(param_index, Property(num_bytes=4))
+                command.set_param_value(param_index, param_value)
+            
         return command
 
     def get_commands_list(self):
