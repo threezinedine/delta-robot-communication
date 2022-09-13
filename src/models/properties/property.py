@@ -19,6 +19,9 @@ class Property(ISetValuableProperty):
         for observer in self._observers:
             observer.update(self)
 
+    def get_value(self) -> object:
+        return self._value
+
     @property
     def changable(self):
         return True

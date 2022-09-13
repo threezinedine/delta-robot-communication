@@ -23,8 +23,20 @@ class XMLParserTest(unittest.TestCase):
         assert parser.get_commands_list() == []
 
         
-    def test_parse_stop_command_from_xml_file(self):
+    def test_parse_default_command_from_xml_file(self):
         self.create_the_xml_file(commands={"command": {}})
         parser = XMLParser(filename=self.filename)
 
-        assert parser.get_commands_list()[0] == self.stop_command
+        assert parser.get_commands_list()[0].get_function() == self.stop_command.get_function()
+
+
+    def test_parse_stop_command_from_xml_file(self):
+        function = 4
+        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": {"parameter": {"index": 4, "value": 4}}}})
+        parser = XMLParser(filename=self.filename)
+
+        address_property = Property() 
+        reset_command = Command(address_property=address_property)
+        reset_command.set_function(function)
+
+        assert parser.get_commands_list()[0].get_function() == reset_command.get_function()

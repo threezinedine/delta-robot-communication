@@ -11,7 +11,12 @@ class XMLParser:
         self.root = tree.getroot()
 
     def _get_command_from_element(self, element):
-        return Command()
+        address_property = Property()
+        command = Command(address_property=address_property)
+
+        if element.find("address") is not None:
+            command.set_function(element.find("address").text)
+        return command
 
     def get_commands_list(self):
         commands = []

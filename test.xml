@@ -1,3 +1,12 @@
 <commands>
-  <command></command>
+  <command>
+    <address>4</address>
+    <name>reset</name>
+    <parameters>
+      <parameter>
+        <index>4</index>
+        <value>4</value>
+      </parameter>
+    </parameters>
+  </command>
 </commands>

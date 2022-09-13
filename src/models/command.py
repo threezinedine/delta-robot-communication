@@ -11,11 +11,15 @@ class Command(ICommand):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
-        self.function = 6
 
     def set_function(self, function:int) -> None:
-        self.function = function
-        self._address_property.set_value(function) 
+        self._address_property.set_value(int(function)) 
+
+    def get_function(self) -> object:
+        if self._address_property is None:
+            return 6
+        else:
+            return self._address_property.get_value()
 
     def _get_params_to_hex(self):
         return b''.join([param.to_hex() for param in self._params])
@@ -36,9 +40,3 @@ class Command(ICommand):
 
     def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
         self._params[param_index] = param
-
-    def __eq__(self, command):
-        if command.function == self.function:
-            return True 
-        else:
-            return False
