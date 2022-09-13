@@ -38,6 +38,30 @@ class XMLParserTest(unittest.TestCase):
         assert parser.get_commands_list()[0].get_function() == reset_command.get_function()
 
 
+    def test_parse_reset_command_from_xml_file_with_no_params_without_name_should_have_empty_name(self):
+        function = 4
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": []}]}})
+        parser = XMLParser(filename=self.filename)
+
+        address_property = Property() 
+        reset_command = Command(address_property=address_property)
+        reset_command.set_function(function)
+
+        assert parser.get_commands_list()[0].get_name() == ''
+
+
+    def test_parse_reset_command_from_xml_file_with_no_params_should_has_the_name(self):
+        function = 4
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": []}]}})
+        parser = XMLParser(filename=self.filename)
+
+        address_property = Property() 
+        reset_command = Command(address_property=address_property)
+        reset_command.set_function(function)
+
+        assert parser.get_commands_list()[0].get_function() == reset_command.get_function()
+
+
     def test_parse_stop_command_from_xml_file(self):
         function = 4
         self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})

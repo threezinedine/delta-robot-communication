@@ -1,0 +1,96 @@
+<commands>
+    <command>
+        <name>reset</name>
+        <address>100</address>
+        <parameters>
+        </parameters>
+    </command>
+    <command>
+        <name>set for soft limit</name>
+        <address>101</address>
+        <parameters>
+            <parameter>
+                <name>X negative limit</name>
+                <index>0</index>
+                <value>-400000</value>
+            </parameter>
+            <parameter>
+                <name>X positive limit</name>
+                <index>1</index>
+                <value>400000</value>
+            </parameter>
+            <parameter>
+                <name>Y negative limit</name>
+                <index>2</index>
+                <value>-300000</value>
+            </parameter>
+            <parameter>
+                <name>Y positive limit</name>
+                <index>3</index>
+                <value>300000</value>
+            </parameter>
+            <parameter>
+                <name>Z negative limit</name>
+                <index>4</index>
+                <value>-800000</value>
+            </parameter>
+            <parameter>
+                <name>Z positive limit</name>
+                <index>5</index>
+                <value>-600000</value>
+            </parameter>
+        </parameters>
+    </command>
+    <command>
+        <name>set rate speed</name>
+        <address>105</address>
+        <parameters>
+            <parameter>
+                <name>acceleration</name>
+                <index>0</index>
+                <value>150000</value>
+            </parameter>
+            <parameter>
+                <name>rate speed percentage</name>
+                <index>1</index>
+                <value>50000</value>
+            </parameter>
+        </parameters>
+    </command>
+    <command>
+        <name>execute the grab command</name>
+        <address>118</address>
+        <parameters>
+            <parameter>
+                <name>X</name>
+                <index>0</index>
+                <value>-200000</value>
+            </parameter>
+            <parameter>
+                <name>Y</name>
+                <index>1</index>
+                <value>200000</value>
+            </parameter>
+            <parameter>
+                <name>Z</name>
+                <index>2</index>
+                <value>-700000</value>
+            </parameter>
+            <parameter>
+                <name>U</name>
+                <index>3</index>
+                <value>1570</value>
+            </parameter>
+            <parameter>
+                <name>ENC</name>
+                <index>4</index>
+                <value>0</value>
+            </parameter>
+            <parameter>
+                <name>H</name>
+                <index>5</index>
+                <value>50000</value>
+            </parameter>
+        </parameters>
+    </command>
+</commands>

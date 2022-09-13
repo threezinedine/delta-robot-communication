@@ -21,6 +21,9 @@ class Command(ICommand):
         else:
             return self._address_property.get_value()
 
+    def get_name(self):
+        return ''
+
     def _get_params_to_hex(self):
         return b''.join([param.to_hex() for param in self._params])
 
