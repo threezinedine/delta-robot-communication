@@ -3,16 +3,28 @@ from src.models import Command, Response
 from src.models.properties import Property
 from src.utils import binding_server_for
 from threading import Thread
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("filename", default="process.xml")
+parser.add_argument("--test", "-t", action='store_true')
+parser.add_argument("--host", "-H", default="192.168.27.16")
+parser.add_argument("--port", "-p", type=int, default=502)
+args = parser.parse_args()
 
 
 if __name__ == "__main__":
-    file = "process.xml"
-    host = "127.0.0.1"
-    port = 8090
-    thread = Thread(target=binding_server_for, args=(host, port))
-    thread.start()
+    if args.test:
+        host = "127.0.0.1"
+        port = 8090
+        thread = Thread(target=binding_server_for, args=(host, port))
+        thread.start()
+    else:
+        host = args.host 
+        port = args.port
 
-    parser = XMLParser(filename=file)
+    parser = XMLParser(filename=args.filename)
     controller = Controller(Command())
     controller.connect(host, port)
     response = Response()
