@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 from ..models import Command
-from ..models.properties import Property
+from ..models.properties import Property, DefaultParam
 
 
 class XMLParser:
@@ -12,7 +12,7 @@ class XMLParser:
 
     def _get_command_from_element(self, element):
         address_property = Property()
-        command = Command(address_property=address_property)
+        command = Command(address_property=address_property, params=[DefaultParam() for _ in range(Command.NUM_PARAMS)])
 
         if element.find("address") is not None:
             command.set_function(element.find("address").text)
@@ -26,12 +26,11 @@ class XMLParser:
 
                     command.set_param(param_index, Property(num_bytes=4))
                     command.set_param_value(param_index, param_value)
-            
+
         return command
 
     def get_commands_list(self):
         commands = []
-        print(self.root.find("commands"))
         for element in self.root.findall("command"):
             commands.append(self._get_command_from_element(element))
 

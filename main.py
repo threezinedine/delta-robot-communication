@@ -20,9 +20,9 @@ if __name__ == "__main__":
     for index, command in enumerate(parser.get_commands_list()):
         controller.command = command
         print(f"""
-            --------------
+            ----------
             Command: {command.to_hex()}
-            --------------
+            ----------
         """)
         response_hex = controller.send(controller.command.to_hex())
         Response.from_bytes(response, response_hex)
