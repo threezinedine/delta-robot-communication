@@ -20,7 +20,7 @@ class XMLParserTest(unittest.TestCase):
                 file.write('')
 
     def test_parse_default_command_from_xml_file(self):
-        self.create_the_xml_file(commands={"commands": [{"command": {}}]})
+        self.create_the_xml_file(commands={"commands": {"command": [{}]}})
         parser = XMLParser(filename=self.filename)
 
         assert parser.get_commands_list()[0].get_function() == self.stop_command.get_function()
@@ -28,7 +28,7 @@ class XMLParserTest(unittest.TestCase):
 
     def test_parse_reset_command_from_xml_file_with_no_params(self):
         function = 4
-        self.create_the_xml_file(commands={"commands": [{"command": {"name": "reset", "address": function, "parameters": []}}]})
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": []}]}})
         parser = XMLParser(filename=self.filename)
 
         address_property = Property() 
@@ -40,8 +40,19 @@ class XMLParserTest(unittest.TestCase):
 
     def test_parse_stop_command_from_xml_file(self):
         function = 4
-        self.create_the_xml_file(commands={"commands": [{"command": {"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}}]})
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
         parser = XMLParser(filename=self.filename)
 
         assert parser.get_commands_list()[0].check_param_changable(4)
         assert parser.get_commands_list()[0].check_param_changable(5)
+
+    def test_parse_multiple_command_from_xml_file(self):
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "stop", "address": 6, "parameters": [{"parameter": []}]}, {"name": "reset", "address": 4, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
+
+        parser = XMLParser(filename=self.filename)
+
+        default_command, reset_command = parser.get_commands_list()
+
+        assert default_command.get_function() == 6
+        assert reset_command.get_function() == 4
+        assert reset_command.check_param_changable(4)

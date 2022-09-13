@@ -20,16 +20,18 @@ class XMLParser:
             params = element.find("parameters")
 
             for param in params:
-                param_index = int(param.find("index").text)
-                param_value = int(param.find("value").text)
+                if param.find("index") is not None:
+                    param_index = int(param.find("index").text)
+                    param_value = int(param.find("value").text)
 
-                command.set_param(param_index, Property(num_bytes=4))
-                command.set_param_value(param_index, param_value)
+                    command.set_param(param_index, Property(num_bytes=4))
+                    command.set_param_value(param_index, param_value)
             
         return command
 
     def get_commands_list(self):
         commands = []
+        print(self.root.find("commands"))
         for element in self.root.findall("command"):
             commands.append(self._get_command_from_element(element))
 
