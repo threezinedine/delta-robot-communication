@@ -14,6 +14,9 @@ class XMLParser:
         address_property = Property()
         command = Command(address_property=address_property, params=[DefaultParam() for _ in range(Command.NUM_PARAMS)])
 
+        if element.find("name") is not None:
+            command.set_name(element.find("name").text)
+
         if element.find("address") is not None:
             command.set_function(element.find("address").text)
 

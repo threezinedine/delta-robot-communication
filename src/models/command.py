@@ -11,6 +11,13 @@ class Command(ICommand):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
+        self._name = ""
+
+    def get_name(self):
+        return self._name
+
+    def set_name(self, new_name):
+        self._name = new_name
 
     def set_function(self, function:int) -> None:
         self._address_property.set_value(int(function)) 

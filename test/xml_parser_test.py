@@ -46,6 +46,13 @@ class XMLParserTest(unittest.TestCase):
         assert parser.get_commands_list()[0].check_param_changable(4)
         assert parser.get_commands_list()[0].check_param_changable(5)
 
+    def test_parse_reset_command_from_xml_file_has_the_correct_name(self):
+        function = 4
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
+        parser = XMLParser(filename=self.filename)
+
+        assert parser.get_commands_list()[0].get_name() == "reset"
+
     def test_parse_multiple_command_from_xml_file(self):
         self.create_the_xml_file(commands={"commands": {"command": [{"name": "stop", "address": 6, "parameters": [{"parameter": [{"index": 1, "value": 13}]}]}, {"name": "reset", "address": 4, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
 
