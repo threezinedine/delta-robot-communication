@@ -11,8 +11,10 @@ class Command(ICommand):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
+        self.function = 6
 
     def set_function(self, function:int) -> None:
+        self.function = function
         self._address_property.set_value(function) 
 
     def _get_params_to_hex(self):
@@ -33,5 +35,10 @@ class Command(ICommand):
             raise ChangeNonChangaleProperty("You cannot change the value of an non-changable property")
 
     def set_param(self, param_index:int, param:ISetValuableProperty) -> None:
-        print(self._params)
         self._params[param_index] = param
+
+    def __eq__(self, command):
+        if command.function == self.function:
+            return True 
+        else:
+            return False
