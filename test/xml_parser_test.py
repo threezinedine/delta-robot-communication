@@ -14,17 +14,13 @@ class XMLParserTest(unittest.TestCase):
 
     def create_the_xml_file(self, commands=[]):
         with open(self.filename, 'w') as file:
-            file.write(dict2xml(commands, wrap="commands"))
+            if commands != []:
+                file.write(dict2xml(commands))
+            else:
+                file.write('')
 
-    def test_parse_no_commands_xml_file(self):
-        self.create_the_xml_file(commands=[]) # create an empty command file
-        parser = XMLParser(filename=self.filename)
-
-        assert parser.get_commands_list() == []
-
-        
     def test_parse_default_command_from_xml_file(self):
-        self.create_the_xml_file(commands={"command": {}})
+        self.create_the_xml_file(commands={"commands": [{"command": {}}]})
         parser = XMLParser(filename=self.filename)
 
         assert parser.get_commands_list()[0].get_function() == self.stop_command.get_function()
@@ -32,7 +28,7 @@ class XMLParserTest(unittest.TestCase):
 
     def test_parse_reset_command_from_xml_file_with_no_params(self):
         function = 4
-        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": []}})
+        self.create_the_xml_file(commands={"commands": [{"command": {"name": "reset", "address": function, "parameters": []}}]})
         parser = XMLParser(filename=self.filename)
 
         address_property = Property() 
@@ -44,7 +40,7 @@ class XMLParserTest(unittest.TestCase):
 
     def test_parse_stop_command_from_xml_file(self):
         function = 4
-        self.create_the_xml_file(commands={"command": {"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}})
+        self.create_the_xml_file(commands={"commands": [{"command": {"name": "reset", "address": function, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}}]})
         parser = XMLParser(filename=self.filename)
 
         assert parser.get_commands_list()[0].check_param_changable(4)
