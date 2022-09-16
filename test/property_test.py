@@ -16,6 +16,27 @@ class PropertyTest(unittest.TestCase):
 
         assert result == expected_result
 
+    def test_to_hex_with_value_negative_value(self):
+        new_value = -400000
+        expected_result = b'\xff\xf9\xe5\x80'
+
+        address_property = Property(num_bytes=4) 
+        address_property.set_value(new_value)
+
+        result = address_property.to_hex()
+
+        assert result == expected_result
+
+    def test_to_hex_with_value_zero_value(self):
+        new_value = 0
+        expected_result = b'\x00\x00\x00\x00'
+
+        address_property = Property(num_bytes=4) 
+        address_property.set_value(new_value)
+
+        result = address_property.to_hex()
+
+        assert result == expected_result
 
     def test_to_hex_with_negative_value(self):
         new_value = -400000

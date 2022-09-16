@@ -34,6 +34,7 @@ if __name__ == "__main__":
         print(f"""
             ----------
             Command: {command.get_name()}
+            Command Name: {command.get_name()}
             Command: {command.to_hex()}
             ----------
         """)
@@ -47,4 +48,5 @@ if __name__ == "__main__":
             --------------
         """)
 
-    controller.send(b'quit')
+    if args.test:
+        controller.send(b'quit')

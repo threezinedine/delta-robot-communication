@@ -18,6 +18,7 @@ class Command(ICommand):
 
     def set_name(self, new_name):
         self._name = new_name
+        self._name = ''
 
     def set_function(self, function:int) -> None:
         self._address_property.set_value(int(function)) 
@@ -27,6 +28,12 @@ class Command(ICommand):
             return 6
         else:
             return self._address_property.get_value()
+
+    def get_name(self):
+        return self._name 
+
+    def set_name(self, new_name):
+        self._name = new_name
 
     def _get_params_to_hex(self):
         return b''.join([param.to_hex() for param in self._params])

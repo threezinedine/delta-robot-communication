@@ -1,0 +1,27 @@
+
+    <command>
+        <name>run</name>
+        <address>3</address>
+        <parameters>
+            <parameter>
+                <index>0</index>
+                <value>10000</value>
+            </parameter>
+            <parameter>
+                <index>1</index>
+                <value>10000</value>
+            </parameter>
+            <parameter>
+                <index>2</index>
+                <value>-700000</value>
+            </parameter>
+            <parameter>
+                <index>3</index>
+                <value>0</value>
+            </parameter>
+            <parameter>
+                <index>4</index>
+                <value>1000</value>
+            </parameter>
+        </parameters>
+    </command>
