@@ -1,7 +1,9 @@
 import unittest
 from unittest.mock import Mock
 from src.controllers import Controller
-from src.models import ISetFunctionable
+from src.models import ISetFunctionable, ICommandDelayable, IDelayable
+from src.utils import binding_server
+from threading import Thread
 
 
 class ControllerTest(unittest.TestCase):
@@ -12,3 +14,18 @@ class ControllerTest(unittest.TestCase):
         controller.set_function(command_address)
 
         command.set_function.assert_called_once_with(command_address)
+
+    def test_command_run_delay_each_time_the_command_is_sent(self):
+        host = "127.0.0.1"
+        port = 8090
+
+        command = Mock(spec=IDelayable)
+        controller = Controller(command=command)
+        thread = Thread(target=binding_server, args=(host, port))
+        thread.start()
+
+        controller.connect(host, port)
+
+        controller.send(b'test')
+
+        command.delay.assert_called_once()

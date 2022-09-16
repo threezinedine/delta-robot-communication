@@ -16,6 +16,17 @@ class PropertyTest(unittest.TestCase):
 
         assert result == expected_result
 
+    def test_reverse_to_hex_function(self):
+        new_value = -400000
+        expected_result = b'\x80\xe5\xf9\xff'
+
+        address_property = Property(num_bytes=4, reverse=True) 
+        address_property.set_value(new_value)
+
+        result = address_property.to_hex()
+
+        assert result == expected_result
+
     def test_to_hex_with_value_negative_value(self):
         new_value = -400000
         expected_result = b'\xff\xf9\xe5\x80'
@@ -126,3 +137,4 @@ class PropertyTest(unittest.TestCase):
         observer_1.update.assert_called_once_with(test_property)
         observer_2.update.assert_not_called()
         observer_3.update.assert_called_once_with(test_property)
+

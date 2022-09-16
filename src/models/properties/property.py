@@ -5,16 +5,24 @@ from ...views import IObserver
 class Property(ISetValuableProperty):
     BYTEORDER = 'big'
 
-    def __init__(self, num_bytes=2):
+    def __init__(self, num_bytes=2, reverse=False):
         self._value = 0
         self._num_bytes = num_bytes
         self._observers = []
+        self._reverse = reverse
     
     def to_hex(self) -> bytearray:
+        hex_value = None
+
         if self._value >= 0:
-            return self._value.to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
+            hex_value = self._value.to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
         else:
-            return (2 ** (self._num_bytes * 8) + self._value).to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
+            hex_value = (2 ** (self._num_bytes * 8) + self._value).to_bytes(self._num_bytes, byteorder=self.BYTEORDER)
+
+        if self._reverse:
+            return hex_value[::-1]
+        else:
+            return hex_value
 
     def set_value(self, new_value:object) -> None:
         self._value = new_value
@@ -34,3 +42,6 @@ class Property(ISetValuableProperty):
 
     def remove_observer(self, observer:IObserver) -> None:
         self._observers.remove(observer)
+
+    def is_reverse(self) -> bool:
+        return self._reverse

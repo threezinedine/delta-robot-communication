@@ -7,6 +7,5 @@ def then_the_app_receive_the_address_and_value(context, address, value):
     response_obj = Response()
     Response.from_bytes(response_obj, context.response)
 
-    print(type(value))
     assert response_obj.get_function() == int(address)
     assert response_obj.get_value() == int(value)

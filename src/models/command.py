@@ -7,11 +7,14 @@ from copy import deepcopy
 class Command(ICommand):
     NUM_PARAMS = 6
 
-    def __init__(self, address_property:IProperty=None, params=[DefaultParam() for _ in range(NUM_PARAMS)]):
+    def __init__(self, address_property:IProperty=None, 
+            params=[DefaultParam() for _ in range(NUM_PARAMS)],
+            delay=None):
         self._header_frame = FrameHeaderProperty()
         self._address_property = address_property
         self._params = params
         self._name = ""
+        self._delay = delay
 
     def get_name(self):
         return self._name
@@ -60,3 +63,16 @@ class Command(ICommand):
 
     def get_param_value(self, param_index):
         return self._params[param_index].get_value()
+
+    def delay(self) -> None:
+        if self._delay is not None:
+            self._delay.run()
+
+    def get_delay_milis(self) -> int:
+        if self._delay is not None:
+            return self._delay.get_value()
+        else:
+            return 0
+
+    def check_param_reversed(self, index) -> bool:
+        return self._params[index].is_reverse()

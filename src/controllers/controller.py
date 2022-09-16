@@ -1,6 +1,7 @@
 import socket
 from ..utils import create_a_socket_client
 from ..models import Command
+from time import sleep
 
 
 class Controller:
@@ -13,7 +14,10 @@ class Controller:
 
     def send(self, msg):
         self.client.send(msg)
-        return self.client.recv(100)
+        result = self.client.recv(100)
+        if self.command is not None:
+            self.command.delay()
+        return result
 
     def set_function(self, function):
         self.command.set_function(function)

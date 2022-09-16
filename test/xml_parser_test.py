@@ -15,6 +15,7 @@ class XMLParserTest(unittest.TestCase):
     def create_the_xml_file(self, commands=[]):
         with open(self.filename, 'w') as file:
             if commands != []:
+                print(dict2xml(commands))
                 file.write(dict2xml(commands))
             else:
                 file.write('')
@@ -102,3 +103,17 @@ class XMLParserTest(unittest.TestCase):
         assert reset_command.check_param_changable(4)
         assert reset_command.get_param_value(4) == 4
         assert reset_command.get_param_value(5) == 1
+
+    def test_parse_reset_command_with_delay_param(self):
+        function = 4
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "delay": 300, "parameters": [{"parameter": [{"index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
+        parser = XMLParser(filename=self.filename)
+
+        assert parser.get_commands_list()[0].get_delay_milis() == 300
+
+    def test_parse_run_command_reverse_param(self):
+        function = 5
+        self.create_the_xml_file(commands={"commands": {"command": [{"name": "reset", "address": function, "delay": 300, "parameters": [{"parameter": [{"reverse": True, "index": 4, "value": 4}, {"index": 5, "value": 1}]}]}]}})
+        parser = XMLParser(filename=self.filename)
+
+        assert parser.get_commands_list()[0].check_param_reversed(4)

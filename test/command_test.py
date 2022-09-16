@@ -3,6 +3,7 @@ from src.models import Command
 from unittest.mock import Mock
 from src.models.properties import IProperty, ISetValuable, ISetValuableProperty, DefaultParam
 from src.utils.exceptions import ChangeNonChangaleProperty
+from src.utils import IDelay
 
 
 class CommandTest(unittest.TestCase):
@@ -105,3 +106,12 @@ class CommandTest(unittest.TestCase):
         command.set_param_value(changed_param_index, new_value)
 
         changable_param.set_value.assert_called_once_with(new_value)
+
+    def test_command_get_delay_milis(self):
+        delay = Mock(spec=IDelay)
+
+        command = Command(delay=delay)
+
+        command.delay()
+        
+        delay.run.assert_called_once()
