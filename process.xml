@@ -1,0 +1,44 @@
+<commands>
+    <command>
+        <name>run program</name>
+        <address>5</address>
+        <parameters>
+            <parameter>
+                <name>Program</name>
+                <reverse>True</reverse>
+                <index>4</index>
+                <value>0</value>
+            </parameter>
+        </parameters>
+    </command>
+    <command>
+        <name>send position</name>
+        <address>1</address>
+        <parameters>
+            <parameter>
+                <name>X</name>
+                <reverse>True</reverse>
+                <index>0</index>
+                <value>-300000</value>
+            </parameter>
+            <parameter>
+                <name>Y</name>
+                <reverse>True</reverse>
+                <index>1</index>
+                <value>-100000</value>
+            </parameter>
+            <parameter>
+                <name>Z</name>
+                <reverse>True</reverse>
+                <index>2</index>
+                <value>-700000</value>
+            </parameter>
+            <parameter>
+                <name>Z</name>
+                <reverse>True</reverse>
+                <index>3</index>
+                <value>-2000</value>
+            </parameter>
+        </parameters>
+    </command>
+</commands>

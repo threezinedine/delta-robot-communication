@@ -1,0 +1,2 @@
+class ChangeNonChangaleProperty(Exception):
+    pass
