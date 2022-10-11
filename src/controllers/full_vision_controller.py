@@ -1,4 +1,5 @@
 from ..models.full_vision_model import FullVisionModel
+import numpy as np
 from ..views.full_vision import FullVisionWidget
 from .controller import Controller
 from ..models.properties import Property, DefaultParam
@@ -40,13 +41,15 @@ class FullVisionController:
         try:
             points = deepcopy(self.detector.tracker.picking_hub)
             self.detector.tracker.picking_hub = []
+            angles = deepcopy(self.model.get_value("angles"))
 
-            for (point, encoder) in points:
+            for (point, encoder), angle in zip(points, angles):
                 x_val, y_val = self.convert([point[0], point[1]])
                 x_real_val = int(round(x_val * 1000))
                 y_real_val = int(round(y_val * 1000))
+                real_angle = int(round(angle) * 1000 / 180 * np.pi)
                 z_val = -785000
-                self.connection.send_point(x_real_val, y_real_val, z_val, encoder_value=encoder)
+                self.connection.send_point(x_real_val, y_real_val, z_val, angle=real_angle, encoder_value=encoder)
         except Exception as e:
             print(e)
 

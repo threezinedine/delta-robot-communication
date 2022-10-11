@@ -33,10 +33,13 @@ class WebcamThread(QThread):
         capture = cv.VideoCapture(self.controller.model.get_value("cam_id", is_combo_box=True)[1])
 
         while self._cam_on:
-            ret, frame = capture.read()
+            first_time = time()
+            encoder_value = self.controller.connection.get_current_encoder_value()
+            self.controller.model.set_value("encoder_value", encoder_value)
+            ret = capture.grab()
+            ret, frame = capture.retrieve()
+            print(f"[DEBUG] capturing time: {time() - first_time}")
             if ret: 
-                encoder_value = self.controller.connection.get_current_encoder_value()
-                self.controller.model.set_value("encoder_value")
                 first_time = time()
                 img = self._preprocess_img(frame)
 
@@ -58,11 +61,12 @@ class WebcamThread(QThread):
 #            if len(self.controller.detector.tracker.picking_hub) > 0:
 #                print(f"[DEBUG] Picking Hub: {self.controller.detector.tracker.picking_hub}get_function()")
 
-            print(f"[INFO] Image processing time: {time() - first_time}")
+#            print(f"[INFO] Image processing time: {time() - first_time}")
             if len(self.controller.detector.tracker.picking_hub) > 0:
-                first_time = time()
+#                first_time = time()
                 self.controller.run()
-                print(f"[INFO] Running time: {time() - first_time}")
+#                print(f"[INFO] Running time: {time() - first_time}")
+            
 
     def _preprocess_img(self, img):
         img = cv.cvtColor(img, cv.COLOR_BGR2RGB)

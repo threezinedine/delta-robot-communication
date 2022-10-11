@@ -35,9 +35,9 @@ class Controller:
         result = self.client.recv(100)
         if self.command is not None:
             first_time = time()
-            print(f"[DEBUG] Delay start for msg: {msg}")
+#            print(f"[DEBUG] Delay start for msg: {msg}")
             self.command.delay()
-            print(f"[DEBUG] Delay end for msg: {msg} - Cosuming time: {time() - first_time}")
+#            print(f"[DEBUG] Delay end for msg: {msg} - Cosuming time: {time() - first_time}")
         return result
 
     def set_function(self, function):
