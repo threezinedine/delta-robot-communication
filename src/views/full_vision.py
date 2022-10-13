@@ -83,7 +83,7 @@ class FullVisionWidget(QWidget):
         self.vision_camera_label.config(controller, self.webcam_thread, self.webcam_thread.vision_img)
 
     def run(self):
-        self.picking = True
+        self.controller.picking = True
         self.controller.connection.start_program(0)
 
     def config_display_points(self, class_name, display_point_labels, topic="mapping_points"):
@@ -227,6 +227,6 @@ class FullVisionWidget(QWidget):
         self.controller.connection.disconnect()
 
     def reset(self):
-        self.picking = False
+        self.controller.picking = False
         self.controller.connection.stop_program()
         self.controller.connection.reset()

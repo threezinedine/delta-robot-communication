@@ -30,14 +30,16 @@ class Controller:
     def is_connected(self):
         return self._connected
 
-    def send(self, msg):
+    def send(self, msg, debug=False):
         self.client.send(msg)
         result = self.client.recv(100)
         if self.command is not None:
             first_time = time()
-#            print(f"[DEBUG] Delay start for msg: {msg}")
+            if debug:
+                print(f"[DEBUG] Delay start for msg: {msg}")
             self.command.delay()
-#            print(f"[DEBUG] Delay end for msg: {msg} - Cosuming time: {time() - first_time}")
+            if debug:
+                print(f"[DEBUG] Delay end for msg: {msg} - Cosuming time: {time() - first_time}")
         return result
 
     def set_function(self, function):
@@ -197,7 +199,7 @@ class Controller:
         self.command.set_param(4, Property(num_bytes=4, reverse=True))
         self.command.set_param_value(4, encoder_value)
         if self.is_connected():
-            self.send(self.command.to_hex())
+            self.send(self.command.to_hex(), True)
         else:
             print(self.command.to_hex())
 

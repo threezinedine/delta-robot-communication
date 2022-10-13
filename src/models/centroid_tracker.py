@@ -24,11 +24,12 @@ class CentroidTracker():
     def _check_picking(self, controller):
         catch_line = controller.model.get_value("catch_line")
         encoder_value = controller.model.get_value("encoder_value")
-        for obj_id, center in self.objects.items():
-            if center[0] > catch_line and obj_id not in self.picking_id_hub:
-                self.picking_id_hub.add(obj_id)
-                self.picking_hub.append([center, encoder_value])
-                print(f"[DEBUG] Picking hub: {self.picking_hub}")
+        if controller.picking:
+            for obj_id, center in self.objects.items():
+                if center[0] > catch_line and obj_id not in self.picking_id_hub:
+                    self.picking_id_hub.add(obj_id)
+                    self.picking_hub.append([center, encoder_value])
+                    print(f"[DEBUG] Picking hub: {self.picking_hub}")
 
     def update(self, points, controller=None):
         if len(points) == 0:

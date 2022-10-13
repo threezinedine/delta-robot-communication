@@ -49,7 +49,7 @@ class FullVisionController:
                 y_real_val = int(round(y_val * 1000))
                 real_angle = int(round(angle) * 1000 / 180 * np.pi)
                 z_val = -785000
-                self.connection.send_point(x_real_val, y_real_val, z_val, angle=real_angle, encoder_value=encoder)
+                self.connection.send_point(x_real_val, y_real_val, z_val, encoder_value=encoder)
         except Exception as e:
             print(e)
 
