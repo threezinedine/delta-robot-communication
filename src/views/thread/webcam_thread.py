@@ -30,16 +30,21 @@ class WebcamThread(QThread):
         self._size = self._get_size(model)
 
     def run(self):
-        capture = cv.VideoCapture(self.controller.model.get_value("cam_id", is_combo_box=True)[1])
+        capture = cv.VideoCapture(self.controller.model.get_value("cam_id", is_combo_box=True)[1], cv.CAP_DSHOW)
         capture.set(cv.CAP_PROP_BUFFERSIZE, 1)
+#        capture.set(cv.CAP_PROP_FRAME_WIDTH, 500)
+#        capture.set(cv.CAP_PROP_FRAME_HEIGHT, 400)
 
         while self._cam_on:
-#            ret = capture.grab()
-            ret, frame = capture.read()
+            ret = capture.grab()
+#            ret, frame = capture.read()
             if self.controller.picking:
                 encoder_value = self.controller.connection.get_current_encoder_value()
                 self.controller.model.set_value("encoder_value", encoder_value)
+
+            ret, frame = capture.retrieve()
             if ret: 
+                print(f"[DEBUG] Shape of the input: {frame.shape}")
                 img = self._preprocess_img(frame)
 
                 self._detect_centers(img)
