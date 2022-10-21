@@ -44,7 +44,6 @@ class WebcamThread(QThread):
 
             ret, frame = capture.retrieve()
             if ret: 
-                print(f"[DEBUG] Shape of the input: {frame.shape}")
                 img = self._preprocess_img(frame)
 
                 self._detect_centers(img)

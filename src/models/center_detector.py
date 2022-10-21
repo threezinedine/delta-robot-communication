@@ -2,6 +2,8 @@ from .i_model import Model
 import cv2 as cv
 import numpy as np
 from .centroid_tracker import *
+from threading import Thread
+from time import sleep
 
 
 class CenterDetector(Model):
@@ -11,6 +13,15 @@ class CenterDetector(Model):
         self._values = values
         self._bnd_boxes = []
         self.tracker = CentroidTracker()
+        self.special = False
+
+    def _reset_special(self, second):
+        sleep(second) 
+        self.special = False
+
+    def reset_special(self, second=2):
+        thread = Thread(target=self._reset_special, args=(second, ))
+        thread.start()
 
     def set_shifting_frame(self, shifting_frame):
         self._shifting_frame = shifting_frame
@@ -90,7 +101,11 @@ class CenterDetector(Model):
 
             if area > self._values["area_threshold"]:
 #                print(self._get_rect_from_contour(contour))
-                self._bnd_boxes.append(self._get_rect_from_contour(contour))
+                x_min, y_min, w, h = self._get_rect_from_contour(contour)
+                print(f"[DEBUG] Size: {(x, y, w, h)}")
+                if w > 1.5 * h:
+                    self.special = True
+                self._bnd_boxes.append((x_min + self._shifting_frame[0], y_min + self._shifting_frame[1], w, h))
                 return True, (x, y), angle
             else:
                 return False, None, None

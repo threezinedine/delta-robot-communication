@@ -43,12 +43,18 @@ class FullVisionController:
             self.detector.tracker.picking_hub = []
             angles = deepcopy(self.model.get_value("angles"))
 
+            if self.detector.special:
+                print("Special")
+                self.connection.stop_program()
+                self.connection.start_program(0)
+                self.detector.reset_special()
+
             for (point, encoder), angle in zip(points, angles):
                 x_val, y_val = self.convert([point[0], point[1]])
                 x_real_val = int(round(x_val * 1000))
                 y_real_val = int(round(y_val * 1000))
                 real_angle = int(round(angle) * 1000 / 180 * np.pi)
-                z_val = -785000
+                z_val = int(round(self.model.get_value("z_val_low") * 1000))
                 self.connection.send_point(x_real_val, y_real_val, z_val, encoder_value=encoder)
         except Exception as e:
             print(e)
